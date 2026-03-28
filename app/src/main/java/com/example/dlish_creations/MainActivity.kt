@@ -73,40 +73,52 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+/**
+ *  Main App
+ */
 @Composable
 fun App() {
 
     //Cart
     val cart = remember { Cart() }
 
-    //Nav
+    //Nav Controller
     val navController = rememberNavController()
 
+    //Set "sticky" bottom navigation bar
     Scaffold(
         bottomBar = { BottomNavBar(navController, cart) }
     ) { innerPadding ->
         NavHost(
+            //Set navigation controller, starting route, and scaffold padding
             navController = navController,
             startDestination = Screen.Home.route,
             modifier = Modifier.padding(innerPadding)
         ) {
+            //Determine home and cart views based on route
             composable(Screen.Home.route) { HomeScreen(cart) }
             composable(Screen.Cart.route) { CartScreen(cart) }
         }
     }
 }
 
+/**
+ * Creates the bottom navigation bar and handles navigation between screens
+ */
 @Composable
 fun BottomNavBar(navController: NavController, cart: Cart) {
+
     val backStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = backStackEntry?.destination?.route
 
     NavigationBar {
+        //Navigation for Home
         NavigationBarItem(
             icon = { Icon(Icons.Default.Home, contentDescription = "Home") },
             label = { Text("Home") },
             selected = currentRoute == Screen.Home.route,
             onClick = {
+                //Navigate to Home screen - prevents duplicates and preserves state
                 navController.navigate(Screen.Home.route) {
                     popUpTo(navController.graph.startDestinationId) { saveState = true }
                     launchSingleTop = true
@@ -114,8 +126,10 @@ fun BottomNavBar(navController: NavController, cart: Cart) {
                 }
             }
         )
+        //Navigation for Cart
         NavigationBarItem(
             icon = {
+                //Cart badge for item count
                 BadgedBox(
                     badge = {
                         if (cart.cartItems.isNotEmpty()) {
@@ -131,6 +145,7 @@ fun BottomNavBar(navController: NavController, cart: Cart) {
             label = { Text("Cart") },
             selected = currentRoute == Screen.Cart.route,
             onClick = {
+                //Navigate to Cart screen - prevents duplicates and preserves state
                 navController.navigate(Screen.Cart.route) {
                     popUpTo(navController.graph.startDestinationId) { saveState = true }
                     launchSingleTop = true
@@ -141,10 +156,13 @@ fun BottomNavBar(navController: NavController, cart: Cart) {
     }
 }
 
+/**
+ *  Displays the Home screen with product listings
+ */
 @Composable
 fun HomeScreen(cart: Cart) {
 
-    //product list
+    //product list data
     val products = remember {
         listOf(
             Product(
@@ -179,7 +197,7 @@ fun HomeScreen(cart: Cart) {
         )
     }
 
-    //Products
+    //Displays Home page Welcome and Products
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -189,6 +207,7 @@ fun HomeScreen(cart: Cart) {
             Welcome()
         }
 
+        //Displays products and passes a callback function that adds item to the cart
         items(products) { product ->
             ProductCard(product) {
                 cart.addProduct(product)
@@ -197,10 +216,14 @@ fun HomeScreen(cart: Cart) {
     }
 }
 
+/**
+ * Displays the cart screen with items, quantity controls,
+ * and the total price.
+ */
 @Composable
 fun CartScreen(cart: Cart) {
-
     LazyColumn() {
+        //Page Title for Cart screen
         item {
             Text(
                 text = "Cart",
@@ -209,6 +232,7 @@ fun CartScreen(cart: Cart) {
             )
         }
 
+        //Cart items displayed with prices and quantities
         itemsIndexed(cart.cartItems) { index, item ->
             val backgroundColor = if (index % 2 == 0)
                 Color.White
@@ -224,6 +248,7 @@ fun CartScreen(cart: Cart) {
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Column(modifier = Modifier.weight(1f)) {
+                    //Product name and price
                     Text(
                         text = item.product.name,
                     )
@@ -238,6 +263,7 @@ fun CartScreen(cart: Cart) {
                     horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
 
+                    //Subtract item quantity button
                     Button(
                         onClick = { item.quantity-- },
                         modifier = Modifier.size(36.dp),
@@ -248,12 +274,14 @@ fun CartScreen(cart: Cart) {
                         Text("-")
                     }
 
+                    //Current item quantity
                     Text(
                         text = "${item.quantity}",
                         modifier = Modifier.padding(horizontal = 12.dp),
                         textAlign = TextAlign.Center
                     )
 
+                    //Add item quantity button
                     Button(
                         onClick = { item.quantity++ },
                         modifier = Modifier.size(36.dp),
@@ -265,24 +293,32 @@ fun CartScreen(cart: Cart) {
                 }
             }
         }
+        //Displays cart total.
         item() {
             Text("Total: ${formatPrice(cart.getTotal())}")
         }
     }
 }
 
-
+/**
+ *  //Displays welcome title for Home page
+ */
 @Composable
 fun Welcome() {
+
     Text(
         text = "Welcome to D-Lish Creations!"
     )
 }
 
+/**
+ * Creates product card with data and an add to cart button.
+ */
 @Composable
 fun ProductCard(product: Product, onAddToCart: (Product) -> Unit) {
     Spacer(modifier = Modifier.height(12.dp))
 
+    //Product card
     Surface(
         modifier = Modifier
             .fillMaxWidth()
@@ -293,11 +329,13 @@ fun ProductCard(product: Product, onAddToCart: (Product) -> Unit) {
             ),
         shape = RoundedCornerShape(10.dp)
     ) {
+        //Data displayed for each product
         Column(modifier = Modifier.padding(10.dp)) {
             Text(text = product.name)
             Text(text = "Price: ${formatPrice(product.price)}")
             Text(text = "Material: ${product.material}")
             Text(text = "Size: ${product.size.heightIn}h x ${product.size.widthIn}w x ${product.size.depthIn}d")
+            //Add to cart button
             Button(onClick = { onAddToCart(product) }) {
                 Text("Add to Order")
             }
@@ -305,11 +343,16 @@ fun ProductCard(product: Product, onAddToCart: (Product) -> Unit) {
     }
 }
 
+/**
+ *  Reusable US price formating eg. $10.00
+ */
 fun formatPrice(price: Double): String {
     return NumberFormat.getCurrencyInstance(Locale.US).format(price)
 }
 
-
+/**
+ *  Preview for Android studio
+ */
 @Preview(showBackground = true)
 @Composable
 fun OrderScreenPreview() {
