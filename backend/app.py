@@ -46,7 +46,8 @@ def history():
 @app.route("/contact-info", methods=["GET"])
 def contact():
   return jsonify({
-    "Email: dlishcreations@gmail.com | Phone: 555-5555"
+    "email": "dlishcreations@gmail.com",
+    "phone": "555-5555"
   })
 
 if __name__ == "__main__":
