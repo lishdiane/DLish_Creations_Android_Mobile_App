@@ -1,16 +1,17 @@
 from datetime import datetime
 from time import strftime
-
 from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
 messages = []
 
+# Route that returns connection confirmation
 @app.route("/")
 def home():
   return "Flask server is running"
 
+# Route to receive a message and return an echo reply with timestamp
 @app.route("/message", methods=["POST"])
 def message():
   date = datetime.now()
@@ -30,6 +31,7 @@ def message():
 
   return jsonify(response)
 
+# Route to return the status of the order
 @app.route("/order-status", methods=["GET"])
 def status():
 
@@ -37,12 +39,14 @@ def status():
     "order_status": "Your order is processing"
   })
 
+# Route to return all messages in the message history
 @app.route("/history", methods=["GET"])
 def history():
   return jsonify({
     "messages": messages
   })
 
+# Route to return contact email and phone number 
 @app.route("/contact-info", methods=["GET"])
 def contact():
   return jsonify({
