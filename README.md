@@ -1,4 +1,4 @@
-# D-Lish Creations
+# D-Lish Creations (In Progress)
  
 A full-stack mobile application built with a Kotlin/Jetpack Compose Android client and a Python Flask backend server. The two components communicate over HTTP, with the Android app sending requests and the Flask server handling responses.
 
