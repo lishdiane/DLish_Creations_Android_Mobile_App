@@ -18,14 +18,6 @@ The app is written in Kotlin and Java and utilizes Android Jetpack libraries inc
 
 The backend server is built with Python and Flask. See the `backend` folder for setup instructions.
 
-## Useful Websites
-
-- [Jetpack Compose Documentation](https://developer.android.com/jetpack/compose)
-- [Jetpack Compose Basics Codelab](https://developer.android.com/codelabs/jetpack-compose-basics)
-- [Kotlin Documentation](https://kotlinlang.org/docs/home.html)
-- [OkHttp Documentation](https://square.github.io/okhttp/)
-- [Kotlin Coroutines Guide](https://kotlinlang.org/docs/coroutines-guide.html)
-- [Material 3 Documentation](https://m3.material.io/)
 
 ## Future Work
 
