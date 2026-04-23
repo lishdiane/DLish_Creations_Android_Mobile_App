@@ -1,12 +1,8 @@
-# D-Lish Creations — Mobile App
+# D-Lish Creations — Mobile App (In Progress)
 
 ## Overview
 
-As a software developer, I am continually working to strengthen my ability to build interactive, user-friendly applications using modern frameworks. This project focuses on developing a mobile application using Jetpack Compose to better understand state management, UI design, navigation, and client/server communication within Android development.
-
-This app allows users to browse custom cake topper products, add items to their cart, adjust quantities in real time, and contact the shop owner through a built-in customer support chat screen that communicates with a backend Flask server over HTTP.
-
-The purpose of creating this app was to gain hands-on experience with Android development using Kotlin and Jetpack Compose, as well as to better understand how to manage UI state, user interactions, and network communication in a modern mobile application.
+A Kotlin/Jetpack Compose Android application for browsing and ordering custom cake toppers, featuring real-time cart management and a built-in customer support chat that communicates with a Python Flask backend over HTTP.
 
 ## Development Environment
 
