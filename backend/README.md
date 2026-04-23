@@ -78,16 +78,6 @@ Example response from the server:
 
 ---
 
-## Useful Websites
-
-* [Flask Documentation](https://flask.palletsprojects.com/)
-* [OkHttp Documentation](https://square.github.io/okhttp/)
-* [Jetpack Compose Documentation](https://developer.android.com/compose)
-* [Kotlin Coroutines Guide](https://kotlinlang.org/docs/coroutines-guide.html)
-* [Android Networking with OkHttp](https://square.github.io/okhttp/recipes/)
-
----
-
 ## Future Work
 
 * Implement live chat so the business owner can respond to messages in real time
